@@ -2,9 +2,9 @@
 
 These are the errors or unexpected behaviors you're most likely to run into when using Git:
 
-## Your `push` is rejected
+# Your `push` is rejected
 
-#### How it looks
+### How it looks
 
 ```
 $ git push origin master
@@ -17,13 +17,13 @@ To git@github.com:wdi-student/my-repo.git
  hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ```
 
-#### Explanation
+### Explanation
 
 A Git repository is a series of "snapshots" of your files in the same way that a cartoon is a series of snapshots of drawings.
 
 This error says you were unable to push some commits ("refs") to Github because you're missing some commits that Github has. In other words, someone has added more frames to the cartoon on Github, and you don't have those frames. Presumably you don't want to overwrite those frames, so Github rejects your push.
 
-#### Resolution
+### Resolution
 
 Notice the "hint" saying to `git pull ...`? Just run:
 
@@ -33,9 +33,9 @@ $ git pull origin master
 
 This will pull down the commits you're missing. Then, you should be able to push yours up to Github.
 
-## Merge conflicts
+# Merge conflicts
 
-#### How it looks
+### How it looks
 
 ```
 $ git merge branch-two
@@ -62,11 +62,11 @@ Automatic merge failed; fix conflicts and then commit the result.
 ~/Desktop/wdi-student (master *+|MERGING) $
 ```
 
-#### Explanation
+### Explanation
 
 You and another person both tried to commit different changes affecting the same parts of the same files at the same time. Git doesn't know which commit is "right", so it's asking you to tell it.
 
-#### Resolution
+### Resolution
 
 Notice it specifies the file(s) that have the merge conflicts. In this case, it's just one file: `some-file.html`. If you open that file you'll see at least one section like this:
 
@@ -82,9 +82,9 @@ This is showing you the change you made and the change the other person made.
 
 Simply delete the lines you don't want. (Presumably you don't want the `<<<<<<<` lines, so delete those too!) Then, `add` and `commit` as normal.
 
-## You can't pull because you're up-to-date, but you know changes have been made
+# You can't pull because you're up-to-date, but you know changes have been made
 
-#### How it looks
+### How it looks
 
 ```
 $ git pull origin master
@@ -93,13 +93,13 @@ From github.com:wdi-student/my-repo
 Already up-to-date.
 ```
 
-### Possibility 1
+## Possibility 1
 
-#### Explanation
+### Explanation
 
 You're pulling commits from the wrong branch.
 
-#### Resolution
+### Resolution
 
 Run this:
 
@@ -113,15 +113,15 @@ Similarly, if you get this error when trying to push, run:
 $ git push origin THE-BRANCH-NAME
 ```
 
-### Possibility 2
+## Possibility 2
 
-#### Explanation
+### Explanation
 
 This happens when someone has rebased or reset what's on the remote repository. Until you're *really* comfortable with Git you probably shouldn't be doing either of those. Basically, it changes a commit that has already been made.
 
 Because the commit still has the same ID (or "SHA") that it did before, the Git on your computer doesn't recognize it as a new commit. As far as it's concerned, you have the same commits the remote repository does.
 
-#### Resolution
+### Resolution
 
 Run this:
 
@@ -131,9 +131,9 @@ $ git reset --hard origin/master
 
 This is saying, "Drop everything I have and make it look exactly like whatever's in the `master` branch of the remote repository." Note that **this will overwrite any changes you've made that aren't on Github**.
 
-## Your head is detached
+# Your head is detached
 
-#### How it looks
+### How it looks
 
 ```
 $ git checkout 17a9271
@@ -151,13 +151,13 @@ do so (now or later) by using -b with the checkout command again. Example:
 HEAD is now at 17a9271... foo
 ```
 
-#### Explanation
+### Explanation
 
 This actually isn't an error at all -- it just looks weird! Git's telling you that you're not on a branch right now. When you check out a previous commit, even if that commit appears to be on the same branch you're currently in, you still get put into a "branchless" state.
 
 Git can only make commits on a branch. It's giving you this warning to tell you that if you make any commits and then checkout to another branch, they're going to be overwritten and you'll lose your commits.
 
-#### Resolution
+### Resolution
 
 To tell Git to make a new branch from the commit you're currently on, do exactly what it tells you to do in the warning message:
 
@@ -165,7 +165,7 @@ To tell Git to make a new branch from the commit you're currently on, do exactly
 $ git checkout -b NEW-BRANCH-NAME
 ```
 
-## Something else?
+# Something else?
 
 Let the instructors know!
 
