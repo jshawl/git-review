@@ -195,6 +195,87 @@ To tell Git to make a new branch from the commit you're currently on, do exactly
 $ git checkout -b NEW-BRANCH-NAME
 ```
 
+# 6. Not a git repository
+
+#### How it looks
+
+```
+$ git pretty-much-anything
+fatal: Not a git repository (or any of the parent directories): .git
+```
+
+#### Explanation
+
+There's no `.git` folder, i.e. you haven't made your folder into a Git repository.
+
+#### Resolution
+
+Inside the folder:
+
+```
+$ git init
+```
+
+# 7. "Origin" is not a remote repository
+
+#### How it looks
+
+```
+$ git push origin master
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+```
+
+#### Explanation
+
+Either you misspelled `origin`, or your local repository doesn't "know" about the repository on Github.
+
+#### Resolution
+
+Inside the folder:
+
+```
+$ git remote add origin git@github.com:ga-wdi-exercises/homeworkaroo.git
+```
+
+# 8. `git remote -v` shows the wrong repo
+
+#### How it looks
+
+```
+$ git remote -v
+origin git@github.com/this-is-the-wrong-organization/homeworkaroo.git (fetch)
+origin git@github.com/this-is-the-wrong-organization/homeworkaroo.git (push)
+```
+
+#### Explanation
+
+Your local repository thinks you want to push to the wrong Github repository.
+
+#### Resolution
+
+```
+$ git remote remove origin
+$ git remote add origin git@github.com:wdi-student/homeworkaroo.git
+$ git push origin master
+```
+
+# 9. `git remote -v` doesn't show anything
+
+#### How it looks
+
+```
+$ git remote -v
+...
+```
+
+#### Explanation
+
+See #7.
+
 # Something else?
 
 Let the instructors know!
