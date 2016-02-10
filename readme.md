@@ -2,7 +2,7 @@
 
 These are the errors or unexpected behaviors you're most likely to run into when using Git:
 
-# Your `push` is rejected
+# 1. Your `push` is rejected because you "failed to push some refs"
 
 ### How it looks
 
@@ -33,7 +33,37 @@ $ git pull origin master
 
 This will pull down the commits you're missing. Then, you should be able to push yours up to Github.
 
-# Merge conflicts
+# 2. Your `push` is rejected because of denied permission
+
+### How it looks
+
+```
+$ git push origin master
+ERROR: Permission to ga-wdi-exercises/homeworkaroo.git denied to wdi-student.
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+```
+
+### Explanation
+
+You're trying to push to a repo that you don't own. Note above it says **ga-wdi-exercises/homeworkaroo.git**. That means you're trying to push to the instructors' repo.
+
+### Resolution
+
+If you haven't already, fork the repo. Then add your fork as the remote called `origin`, push to it, and make a pull request if desired:
+
+```
+$ git remote remove origin
+$ git remote add origin git@github.com:wdi-stduent/homeworkaroo.git
+$ git push origin my-branch-name # Usually `git push origin master`
+# On the Github page for YOUR FORK, click the green "New pull request" button
+# Click the green "Create pull request" button
+# Click the new green "Create pull request" button
+```
+
+# 3. Merge conflicts
 
 ### How it looks
 
@@ -82,7 +112,7 @@ This is showing you the change you made and the change the other person made.
 
 Simply delete the lines you don't want. (Presumably you don't want the `<<<<<<<` lines, so delete those too!) Then, `add` and `commit` as normal.
 
-# You can't pull because you're up-to-date, but you know changes have been made
+# 4. You can't pull because you're "up-to-date", but you know changes have been made
 
 ### How it looks
 
@@ -131,7 +161,7 @@ $ git reset --hard origin/master
 
 This is saying, "Drop everything I have and make it look exactly like whatever's in the `master` branch of the remote repository." Note that **this will overwrite any changes you've made that aren't on Github**.
 
-# Your head is detached
+# 5. Your head is detached
 
 ### How it looks
 
