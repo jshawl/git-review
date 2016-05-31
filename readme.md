@@ -1,9 +1,28 @@
+<style>
+h2:not(:target) a{
+    font-size:1rem;
+    text-align:left;
+    border:0;
+    background-color:transparent;
+}
+h2:not(:target) a:before{
+    content:"\025B8";
+    padding-right:1em;
+}
+h2 + section{
+    display:none;
+}
+h2:target + section{
+    display:block;
+}
+</style>
+
 # Common Git Errors
 
-These are the errors or unexpected behaviors you're most likely to run into when using Git:
+These are the errors or unexpected behaviors you're most likely to run into when using Git.
 
-# 1. Your `push` is rejected because you "failed to push some refs"
-
+## Your `push` is rejected because you "failed to push some refs"
+<section>
 #### How it looks
 
 ```
@@ -32,9 +51,10 @@ $ git pull origin master
 ```
 
 This will pull down the commits you're missing. Then, you should be able to push yours up to Github.
+</section>
 
-# 2. Your `push` is rejected because of denied permission
-
+## Your `push` is rejected because of denied permission
+<section>
 #### How it looks
 
 ```
@@ -62,9 +82,10 @@ $ git push origin my-branch-name # Usually `git push origin master`
 # Click the green "Create pull request" button
 # Click the new green "Create pull request" button
 ```
+</section>
 
-# 3. Merge conflicts
-
+## Merge conflicts
+<section>
 #### How it looks
 
 ```
@@ -111,9 +132,10 @@ This is what Jane wrote.
 This is showing you the change you made and the change the other person made.
 
 Simply delete the lines you don't want. (Presumably you don't want the `<<<<<<<` lines, so delete those too!) Then, `add` and `commit` as normal.
+</section>
 
-# 4. You can't pull because you're "up-to-date", but you know changes have been made
-
+## You can't pull because you're "up-to-date", but you know changes have been made
+<section>
 #### How it looks
 
 ```
@@ -123,13 +145,13 @@ From github.com:wdi-student/my-repo
 Already up-to-date.
 ```
 
-## Possibility 1
+### Possibility 1
 
 #### Explanation
 
 You're pulling commits from the wrong branch.
 
-### Resolution
+#### Resolution
 
 Run this:
 
@@ -143,7 +165,7 @@ Similarly, if you get this error when trying to push, run:
 $ git push origin THE-BRANCH-NAME
 ```
 
-## Possibility 2
+### Possibility 2
 
 #### Explanation
 
@@ -160,9 +182,10 @@ $ git reset --hard origin/master
 ```
 
 This is saying, "Drop everything I have and make it look exactly like whatever's in the `master` branch of the remote repository." Note that **this will overwrite any changes you've made that aren't on Github**.
+</section>
 
-# 5. Your head is detached
-
+## Your head is detached
+<section>
 #### How it looks
 
 ```
@@ -194,9 +217,10 @@ To tell Git to make a new branch from the commit you're currently on, do exactly
 ```
 $ git checkout -b NEW-BRANCH-NAME
 ```
+</section>
 
-# 6. Not a git repository
-
+## Not a git repository
+<section>
 #### How it looks
 
 ```
@@ -215,9 +239,10 @@ Inside the folder:
 ```
 $ git init
 ```
+</section>
 
-# 7. "Origin" is not a remote repository
-
+## "Origin" is not a remote repository
+<section>
 #### How it looks
 
 ```
@@ -240,9 +265,10 @@ Inside the folder:
 ```
 $ git remote add origin git@github.com:ga-wdi-exercises/homeworkaroo.git
 ```
+</section>
 
-# 8. `git remote -v` shows the wrong repo
-
+## `git remote -v` shows the wrong repo
+<section>
 #### How it looks
 
 ```
@@ -262,9 +288,10 @@ $ git remote remove origin
 $ git remote add origin git@github.com:wdi-student/homeworkaroo.git
 $ git push origin master
 ```
+</section>
 
-# 9. `git remote -v` doesn't show anything
-
+## `git remote -v` doesn't show anything
+<section>
 #### How it looks
 
 ```
@@ -275,6 +302,7 @@ $ git remote -v
 #### Explanation
 
 See #7.
+</section>
 
 # Something else?
 
