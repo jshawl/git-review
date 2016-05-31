@@ -1,13 +1,31 @@
 <style>
+body{
+    font-size:18px;
+}
+pre, code{
+    font-size:14px;
+}
+section{
+    border-bottom:1px solid #000;
+    padding-bottom:2em;
+}
+body{
+    counter-reset:sections;
+}
+h2{
+    counter-increment:sections;
+    margin:1em auto;
+}
+h2 a:before{
+    font-weight:normal;
+    color:#666;
+    content:counter(sections) ". ";
+}
 h2:not(:target) a{
     font-size:1rem;
     text-align:left;
     border:0;
     background-color:transparent;
-}
-h2:not(:target) a:before{
-    content:"\025B8";
-    padding-right:1em;
 }
 h2 + section{
     display:none;
@@ -21,15 +39,24 @@ h2:target + section{
 
 These are the errors or unexpected behaviors you're most likely to run into when using Git.
 
-## Your `push` is rejected because you "failed to push some refs"
+## You misnamed your branch
+<section>
+Simply rename it with `git branch -m`:
+
+```
+$ git branch -m bad-branch-name good-branch-name
+```
+</section>
+
+## "error: failed to push some refs"
 <section>
 #### How it looks
 
 ```
 $ git push origin master
-To git@github.com:wdi-student/my-repo.git
+To git@github.com:jsmith/my-repo.git
  ! [rejected]        master -> master (non-fast-forward)
- error: failed to push some refs to 'git@github.com:wdi-student/my-repo.git'
+ error: failed to push some refs to 'git@github.com:jsmith/my-repo.git'
  hint: Updates were rejected because the tip of your current branch is behind
  hint: its remote counterpart. Integrate the remote changes (e.g.
  hint: 'git pull ...') before pushing again.
@@ -47,19 +74,19 @@ This error says you were unable to push some commits ("refs") to Github because 
 Notice the "hint" saying to `git pull ...`? Just run:
 
 ```
-$ git pull origin master
+$ git pull origin master-or-whatever-branch-youre-using
 ```
 
 This will pull down the commits you're missing. Then, you should be able to push yours up to Github.
 </section>
 
-## Your `push` is rejected because of denied permission
+## "ERROR: Permission ... denied to ..."
 <section>
 #### How it looks
 
 ```
 $ git push origin master
-ERROR: Permission to ga-wdi-exercises/homeworkaroo.git denied to wdi-student.
+ERROR: Permission to ga-wdi-exercises/homeworkaroo.git denied to jsmith.
 fatal: Could not read from remote repository.
 
 Please make sure you have the correct access rights
@@ -76,7 +103,7 @@ If you haven't already, fork the repo. Then add your fork as the remote called `
 
 ```
 $ git remote remove origin
-$ git remote add origin git@github.com:wdi-stduent/homeworkaroo.git
+$ git remote add origin git@github.com:jsmith/homeworkaroo.git
 $ git push origin my-branch-name # Usually `git push origin master`
 # On the Github page for YOUR FORK, click the green "New pull request" button
 # Click the green "Create pull request" button
@@ -84,7 +111,7 @@ $ git push origin my-branch-name # Usually `git push origin master`
 ```
 </section>
 
-## Merge conflicts
+## "CONFLICT (add/add): Merge conflict"
 <section>
 #### How it looks
 
@@ -93,7 +120,7 @@ $ git merge branch-two
 Auto-merging some-file.html
 CONFLICT (add/add): Merge conflict in some-file.html
 Automatic merge failed; fix conflicts and then commit the result.
-~/Desktop/wdi-student (branch-one *+|MERGING) $
+~/Desktop/jsmith (branch-one *+|MERGING) $
 ```
 
 ...or...
@@ -104,13 +131,13 @@ remote: Counting objects: 3, done.
 remote: Compressing objects: 100% (2/2), done.
 remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0
 Unpacking objects: 100% (3/3), done.
-From github.com:wdi-student/my-repo
+From github.com:jsmith/my-repo
  * branch            master     -> FETCH_HEAD
-17a9271..c80c46f  master     -> wdi-student/my-repo
+17a9271..c80c46f  master     -> jsmith/my-repo
 Auto-merging some-file.html
 CONFLICT (add/add): Merge conflict in some-file.html
 Automatic merge failed; fix conflicts and then commit the result.
-~/Desktop/wdi-student (master *+|MERGING) $
+~/Desktop/jsmith (master *+|MERGING) $
 ```
 
 #### Explanation
@@ -134,13 +161,13 @@ This is showing you the change you made and the change the other person made.
 Simply delete the lines you don't want. (Presumably you don't want the `<<<<<<<` lines, so delete those too!) Then, `add` and `commit` as normal.
 </section>
 
-## You can't pull because you're "up-to-date", but you know changes have been made
+## "Already up-to-date."
 <section>
 #### How it looks
 
 ```
 $ git pull origin master
-From github.com:wdi-student/my-repo
+From github.com:jsmith/my-repo
  * branch            master     -> FETCH_HEAD
 Already up-to-date.
 ```
@@ -156,13 +183,13 @@ You're pulling commits from the wrong branch.
 Run this:
 
 ```
-$ git pull origin THE-BRANCH-NAME
+$ git pull origin SPECIFY-THE-BRANCH-NAME
 ```
 
 Similarly, if you get this error when trying to push, run:
 
 ```
-$ git push origin THE-BRANCH-NAME
+$ git push origin SPECIFY-THE-BRANCH-NAME
 ```
 
 ### Possibility 2
@@ -175,16 +202,16 @@ Because the commit still has the same ID (or "SHA") that it did before, the Git 
 
 #### Resolution
 
-Run this:
+Run the following. Note that **this will overwrite any changes you've made that aren't on Github**.
 
 ```
 $ git reset --hard origin/master
 ```
 
-This is saying, "Drop everything I have and make it look exactly like whatever's in the `master` branch of the remote repository." Note that **this will overwrite any changes you've made that aren't on Github**.
+This is saying, "Drop everything I have and make it look exactly like whatever's in the `master` branch of the remote repository."
 </section>
 
-## Your head is detached
+## "You are in 'detached HEAD' state."
 <section>
 #### How it looks
 
@@ -206,7 +233,7 @@ HEAD is now at 17a9271... foo
 
 #### Explanation
 
-This actually isn't an error at all -- it just looks weird! Git's telling you that you're not on a branch right now. When you check out a previous commit, even if that commit appears to be on the same branch you're currently in, you still get put into a "branchless" state.
+**This actually isn't an error at all** -- it just looks weird! Git's telling you that you're not on a branch right now. When you check out a previous commit, even if that commit appears to be on the same branch you're currently in, you still get put into a "branchless" state.
 
 Git can only make commits on a branch. It's giving you this warning to tell you that if you make any commits and then checkout to another branch, they're going to be overwritten and you'll lose your commits.
 
@@ -219,12 +246,12 @@ $ git checkout -b NEW-BRANCH-NAME
 ```
 </section>
 
-## Not a git repository
+## "fatal: Not a git repository"
 <section>
 #### How it looks
 
 ```
-$ git pretty-much-anything
+$ git pretty-much-any-command
 fatal: Not a git repository (or any of the parent directories): .git
 ```
 
@@ -241,7 +268,7 @@ $ git init
 ```
 </section>
 
-## "Origin" is not a remote repository
+## "fatal: 'origin' does not appear to be a git repository"
 <section>
 #### How it looks
 
@@ -273,8 +300,8 @@ $ git remote add origin git@github.com:ga-wdi-exercises/homeworkaroo.git
 
 ```
 $ git remote -v
-origin git@github.com/this-is-the-wrong-organization/homeworkaroo.git (fetch)
-origin git@github.com/this-is-the-wrong-organization/homeworkaroo.git (push)
+origin git@github.com/this-is-wrong/homeworkaroo.git (fetch)
+origin git@github.com/this-is-wrong/homeworkaroo.git (push)
 ```
 
 #### Explanation
@@ -284,9 +311,10 @@ Your local repository thinks you want to push to the wrong Github repository.
 #### Resolution
 
 ```
-$ git remote remove origin
-$ git remote add origin git@github.com:wdi-student/homeworkaroo.git
-$ git push origin master
+jsmith: ~/wdi/homeworkaroo (johnsmith_solution) $ git remote remove origin
+jsmith: ~/wdi/homeworkaroo (johnsmith_solution) $ git remote add origin git@github.com:jsmith/homeworkaroo.git
+jsmith: ~/wdi/homeworkaroo (johnsmith_solution) $ git push origin johnsmith_solution
+# Click green 'New pull request' button on Github... (see above)
 ```
 </section>
 
@@ -301,7 +329,58 @@ $ git remote -v
 
 #### Explanation
 
-See #7.
+See previous section.
+</section>
+
+## You have a folder inside a folder
+<section>
+
+#### How it looks
+
+For example, you have something like this attempt at making a Github Pages site:
+
+```
+jsmith.github.io/
+  .git/
+  jsmith.github.io/
+    index.html
+    style.css
+    script.js
+```
+
+#### Explanation
+
+Remember: wherever the `.git` folder is, Git thinks that's the root folder for your repository. 
+
+So, you might go to `http://jsmith.github.io/index.html` and get a 404 error. That's because the `index.html` page is actually at `http://jsmith.github.io/jsmith.github.io/index.html`. However, that URL won't work either because periods are not allowed in URL paths.
+
+Putting it another way, if you named the folders like this:
+
+```
+outer-folder/
+  .git/
+  inner-folder/
+    index.html
+    style.css
+    script.js
+```
+
+...then the working URL would be at `http://outer-folder.github.io/innder-folder/index.html`.
+
+#### Resolution
+
+Move everything from *inside* `inner-folder` to *outside* `inner-folder`:
+
+```
+jsmith: ~/wdi $ cd outer-folder
+jsmith: ~/wdi/outer-folder (johnsmith_solution) $ mv inner-folder/* .
+# This says, "Move everything (*) from `inner-folder` to the present directory (.)
+# Look inside the `inner-folder` and make sure everything's gone. Then delete it.
+jsmith: ~/wdi/outer-folder (johnsmith_solution *) $ rm -rf inner-folder
+jsmith: ~/wdi/outer-folder (johnsmith_solution *) $ git add .
+jsmith: ~/wdi/outer-folder (johnsmith_solution +) $ git commit -m "Right folder"
+jsmith: ~/wdi/outer-folder (johnsmith_solution) $ git push origin johnsmith_solution
+```
 </section>
 
 # Something else?
