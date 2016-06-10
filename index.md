@@ -1,5 +1,18 @@
 ---
 ---
+  <link rel="stylesheet" href="http://robertakarobin.github.io/mdhtml-css/styles.css">
+  <script>
+  document.addEventListener("DOMContentLoaded", function(){
+    var hTags = document.querySelectorAll("h1,h2,h3,h4,h5,h6");
+    [].forEach.call(hTags, function(hTag){
+      var link  = document.createElement("A");
+      link.href = "#" + hTag.id;
+      link.classList.add("nav");
+      link.textContent  = (hTag.textContent);
+      hTag.innerHTML    = link.outerHTML;
+    });
+  });
+  </script>
 
 <style>
 body{
