@@ -161,6 +161,47 @@ This is showing you the change you made and the change the other person made.
 Simply delete the lines you don't want. (Presumably you don't want the `<<<<<<<` lines, so delete those too!) Then, `add` and `commit` as normal.
 </section>
 
+## "Everything up-to-date."
+<section>
+#### How it looks
+
+```
+$ git push origin master
+Everything up-to-date
+```
+
+#### Explanation
+
+What you have in this branch *on your computer* matches what's in this branch on Github.
+
+### Possibility 1
+
+You forgot to `add` and `commit` before pushing.
+
+### Possibility 2
+
+You're pushing from or to the wrong branch.
+
+If all of your updates are in a branch called `testing`, and you want to push them up to a branch called `gh-pages`, you can either:
+
+#### Merge `testing` into `gh-pages`, then push
+
+```
+$ git checkout gh-pages
+$ git merge testing
+$ git push origin testing
+```
+
+#### OR: Push `testing` directly to `gh-pages`
+
+```
+$ git push origin testing:gh-pages
+```
+
+This says, "Take my `testing` branch and push it into the `gh-pages` branch on Github."
+
+</section>
+
 ## "Already up-to-date."
 <section>
 #### How it looks
@@ -350,7 +391,7 @@ jsmith.github.io/
 
 #### Explanation
 
-Remember: wherever the `.git` folder is, Git thinks that's the root folder for your repository. 
+Remember: wherever the `.git` folder is, Git thinks that's the root folder for your repository.
 
 So, you might go to `http://jsmith.github.io/index.html` and get a 404 error. That's because the `index.html` page is actually at `http://jsmith.github.io/jsmith.github.io/index.html`. However, that URL won't work either because periods are not allowed in URL paths.
 
@@ -386,4 +427,3 @@ jsmith: ~/wdi/outer-folder (johnsmith_solution) $ git push origin johnsmith_solu
 # Something else?
 
 Let the instructors know!
-

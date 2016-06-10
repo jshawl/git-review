@@ -134,23 +134,43 @@ This is what Jane wrote.
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; abc123456789</code></pre>
     <p>This is showing you the change you made and the change the other person made.</p>Simply delete the lines you don't want. (Presumably you don't want the <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> lines, so delete those too!) Then, <code>add</code> and <code>commit</code> as normal.
   </section>
-  <h2 id="already-up-to-date.">"Already up-to-date."</h2>
+  <h2 id="everything-up-to-date.">"Everything up-to-date."</h2>
   <section>
     <h4 id="how-it-looks-3">How it looks</h4>
+    <pre><code>$ git push origin master
+Everything up-to-date</code></pre>
+    <h4 id="explanation-3">Explanation</h4>
+    <p>What you have in this branch <em>on your computer</em> matches what's in this branch on Github.</p>
+    <h3 id="possibility-1">Possibility 1</h3>
+    <p>You forgot to <code>add</code> and <code>commit</code> before pushing.</p>
+    <h3 id="possibility-2">Possibility 2</h3>
+    <p>You're pushing from or to the wrong branch.</p>
+    <p>If all of your updates are in a branch called <code>testing</code>, and you want to push them up to a branch called <code>gh-pages</code>, you can either:</p>
+    <h4 id="merge-testing-into-gh-pages-then-push">Merge <code>testing</code> into <code>gh-pages</code>, then push</h4>
+    <pre><code>$ git checkout gh-pages
+$ git merge testing
+$ git push origin testing</code></pre>
+    <h4 id="or-push-testing-directly-to-gh-pages">OR: Push <code>testing</code> directly to <code>gh-pages</code></h4>
+    <pre><code>$ git push origin testing:gh-pages</code></pre>
+    <p>This says, "Take my <code>testing</code> branch and push it into the <code>gh-pages</code> branch on Github."</p>
+  </section>
+  <h2 id="already-up-to-date.">"Already up-to-date."</h2>
+  <section>
+    <h4 id="how-it-looks-4">How it looks</h4>
     <pre><code>$ git pull origin master
 From github.com:jsmith/my-repo
  * branch            master     -&gt; FETCH_HEAD
 Already up-to-date.</code></pre>
-    <h3 id="possibility-1">Possibility 1</h3>
-    <h4 id="explanation-3">Explanation</h4>
+    <h3 id="possibility-1-1">Possibility 1</h3>
+    <h4 id="explanation-4">Explanation</h4>
     <p>You're pulling commits from the wrong branch.</p>
     <h4 id="resolution-3">Resolution</h4>
     <p>Run this:</p>
     <pre><code>$ git pull origin SPECIFY-THE-BRANCH-NAME</code></pre>
     <p>Similarly, if you get this error when trying to push, run:</p>
     <pre><code>$ git push origin SPECIFY-THE-BRANCH-NAME</code></pre>
-    <h3 id="possibility-2">Possibility 2</h3>
-    <h4 id="explanation-4">Explanation</h4>
+    <h3 id="possibility-2-1">Possibility 2</h3>
+    <h4 id="explanation-5">Explanation</h4>
     <p>This happens when someone has rebased or reset what's on the remote repository. Until you're <em>really</em> comfortable with Git you probably shouldn't be doing either of those. Basically, it changes a commit that has already been made.</p>
     <p>Because the commit still has the same ID (or "SHA") that it did before, the Git on your computer doesn't recognize it as a new commit. As far as it's concerned, you have the same commits the remote repository does.</p>
     <h4 id="resolution-4">Resolution</h4>
@@ -159,7 +179,7 @@ Already up-to-date.</code></pre>
   </section>
   <h2 id="you-are-in-detached-head-state.">"You are in 'detached HEAD' state."</h2>
   <section>
-    <h4 id="how-it-looks-4">How it looks</h4>
+    <h4 id="how-it-looks-5">How it looks</h4>
     <pre><code>$ git checkout 17a9271
 Note: checking out '17a9271'.
 
@@ -173,7 +193,7 @@ do so (now or later) by using -b with the checkout command again. Example:
   git checkout -b &lt;new-branch-name&gt;
 
 HEAD is now at 17a9271... foo</code></pre>
-    <h4 id="explanation-5">Explanation</h4>
+    <h4 id="explanation-6">Explanation</h4>
     <p><strong>This actually isn't an error at all</strong> -- it just looks weird! Git's telling you that you're not on a branch right now. When you check out a previous commit, even if that commit appears to be on the same branch you're currently in, you still get put into a "branchless" state.</p>
     <p>Git can only make commits on a branch. It's giving you this warning to tell you that if you make any commits and then checkout to another branch, they're going to be overwritten and you'll lose your commits.</p>
     <h4 id="resolution-5">Resolution</h4>
@@ -182,10 +202,10 @@ HEAD is now at 17a9271... foo</code></pre>
   </section>
   <h2 id="fatal-not-a-git-repository">"fatal: Not a git repository"</h2>
   <section>
-    <h4 id="how-it-looks-5">How it looks</h4>
+    <h4 id="how-it-looks-6">How it looks</h4>
     <pre><code>$ git pretty-much-any-command
 fatal: Not a git repository (or any of the parent directories): .git</code></pre>
-    <h4 id="explanation-6">Explanation</h4>
+    <h4 id="explanation-7">Explanation</h4>
     <p>There's no <code>.git</code> folder, i.e. you haven't made your folder into a Git repository.</p>
     <h4 id="resolution-6">Resolution</h4>
     <p>Inside the folder:</p>
@@ -193,14 +213,14 @@ fatal: Not a git repository (or any of the parent directories): .git</code></pre
   </section>
   <h2 id="fatal-origin-does-not-appear-to-be-a-git-repository">"fatal: 'origin' does not appear to be a git repository"</h2>
   <section>
-    <h4 id="how-it-looks-6">How it looks</h4>
+    <h4 id="how-it-looks-7">How it looks</h4>
     <pre><code>$ git push origin master
 fatal: 'origin' does not appear to be a git repository
 fatal: Could not read from remote repository.
 
 Please make sure you have the correct access rights
 and the repository exists.</code></pre>
-    <h4 id="explanation-7">Explanation</h4>
+    <h4 id="explanation-8">Explanation</h4>
     <p>Either you misspelled <code>origin</code>, or your local repository doesn't "know" about the repository on Github.</p>
     <h4 id="resolution-7">Resolution</h4>
     <p>Inside the folder:</p>
@@ -208,11 +228,11 @@ and the repository exists.</code></pre>
   </section>
   <h2 id="git-remote--v-shows-the-wrong-repo"><code>git remote -v</code> shows the wrong repo</h2>
   <section>
-    <h4 id="how-it-looks-7">How it looks</h4>
+    <h4 id="how-it-looks-8">How it looks</h4>
     <pre><code>$ git remote -v
 origin git@github.com/this-is-wrong/homeworkaroo.git (fetch)
 origin git@github.com/this-is-wrong/homeworkaroo.git (push)</code></pre>
-    <h4 id="explanation-8">Explanation</h4>
+    <h4 id="explanation-9">Explanation</h4>
     <p>Your local repository thinks you want to push to the wrong Github repository.</p>
     <h4 id="resolution-8">Resolution</h4>
     <pre><code>jsmith: ~/wdi/homeworkaroo (johnsmith_solution) $ git remote remove origin
@@ -222,14 +242,14 @@ jsmith: ~/wdi/homeworkaroo (johnsmith_solution) $ git push origin johnsmith_solu
   </section>
   <h2 id="git-remote--v-doesnt-show-anything"><code>git remote -v</code> doesn't show anything</h2>
   <section>
-    <h4 id="how-it-looks-8">How it looks</h4>
+    <h4 id="how-it-looks-9">How it looks</h4>
     <pre><code>$ git remote -v
 ...</code></pre>
-    <h4 id="explanation-9">Explanation</h4>See previous section.
+    <h4 id="explanation-10">Explanation</h4>See previous section.
   </section>
   <h2 id="you-have-a-folder-inside-a-folder">You have a folder inside a folder</h2>
   <section>
-    <h4 id="how-it-looks-9">How it looks</h4>
+    <h4 id="how-it-looks-10">How it looks</h4>
     <p>For example, you have something like this attempt at making a Github Pages site:</p>
     <pre><code>jsmith.github.io/
   .git/
@@ -237,7 +257,7 @@ jsmith: ~/wdi/homeworkaroo (johnsmith_solution) $ git push origin johnsmith_solu
     index.html
     style.css
     script.js</code></pre>
-    <h4 id="explanation-10">Explanation</h4>
+    <h4 id="explanation-11">Explanation</h4>
     <p>Remember: wherever the <code>.git</code> folder is, Git thinks that's the root folder for your repository.</p>
     <p>So, you might go to <code>http://jsmith.github.io/index.html</code> and get a 404 error. That's because the <code>index.html</code> page is actually at <code>http://jsmith.github.io/jsmith.github.io/index.html</code>. However, that URL won't work either because periods are not allowed in URL paths.</p>
     <p>Putting it another way, if you named the folders like this:</p>
