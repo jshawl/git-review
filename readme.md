@@ -1,1 +1,1 @@
-# [Go here](http://ga-wdi-lessons.github.io/git-review/)
+# [Go here](http://jshawl.github.io/git-review/)
